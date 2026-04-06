@@ -32,12 +32,21 @@ Place a laptop at the back of a classroom, meeting room, or presentation hall. T
 
 <div align="center">
 
-| Engaged | Zoned Out |
-|---------|-----------|
-| ![Engaged](assets/engaged.png) | ![Disengaged](assets/disengaged.png) |
+**Engaged Detection**
+![Engaged](https://raw.githubusercontent.com/suhaib1202/CrowdPulse/main/assets/engaged.png)
 
-### Full Dashboard
-![Dashboard](assets/dashboard.png)
+**Zoned Out / Looking Down**
+![Disengaged](https://raw.githubusercontent.com/suhaib1202/CrowdPulse/main/assets/disengaged.png)
+
+**Looking Sideways**
+![Sideways1](https://raw.githubusercontent.com/suhaib1202/CrowdPulse/main/assets/sideways1.png)
+![Sideways2](https://raw.githubusercontent.com/suhaib1202/CrowdPulse/main/assets/sideways2.png)
+
+**Yawning Detection**
+![Yawning](https://raw.githubusercontent.com/suhaib1202/CrowdPulse/main/assets/yanning.png)
+
+**Full Dashboard**
+![Dashboard](https://raw.githubusercontent.com/suhaib1202/CrowdPulse/main/assets/dashboard.png)
 
 </div>
 
@@ -122,25 +131,26 @@ http://127.0.0.1:5000
 ---
 
 ## 📁 Project Structure
-
+```
 CrowdPulse/
-│
-├── app.py              # Flask server — video streaming + API endpoints
-├── detector.py         # Core engine — MediaPipe face analysis
-├── requirements.txt    # Dependencies
+├── app.py                  # Flask server — video streaming + API endpoints
+├── detector.py             # Core engine — MediaPipe face analysis
+├── requirements.txt        # Python dependencies
+├── .gitignore
 │
 ├── templates/
-│   └── index.html      # Live dashboard (split-screen UI + Chart.js graph)
+│   └── index.html          # Live dashboard UI + Chart.js graph
 │
 ├── static/
-│   └── style.css       # Dark theme styling
+│   └── style.css           # Dark theme styling
 │
-└── assets/             # Screenshots and demo GIF
-├── demo.gif
-├── dashboard.png
-├── engaged.png
-├── disengaged.png
-└── sideways.png
+└── assets/                 # Screenshots and demo GIF
+    ├── demo.gif
+    ├── dashboard.png
+    ├── engaged.png
+    ├── disengaged.png
+    └── sideways.png
+```
 ---
 
 ## 🔧 Tuning the Detection
