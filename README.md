@@ -98,7 +98,7 @@ Final Score = `(Engaged Faces ÷ Total Faces) × 100`
 
 ### Step 1 — Clone the repository
 ```bash
-git clone https://github.com/YOUR_USERNAME/CrowdPulse.git
+git clone https://github.com/suhaib1202/CrowdPulse.git
 cd CrowdPulse
 ```
 
@@ -164,16 +164,15 @@ mouth_ratio < 0.25   # Raise to 0.30 if yawn not catching
 ```
 
 Watch the terminal while running — every frame prints live values:
+
 pitch=0.031 | yaw=0.142 | gaze=0.51 | mouth=0.04 | ✅ ENGAGED
+
 pitch=0.134 | yaw=0.138 | gaze=0.48 | mouth=0.04 | ❌ ZONED OUT
 
 
 ## 📦 Dependencies
 
-mediapipe==0.10.33
-opencv-python
-flask
-numpy
+mediapipe==0.10.33, opencv-python, flask, numpy
 
 ---
 
@@ -186,10 +185,9 @@ numpy
 
 ---
 
-## 📄 License
+## 👤 Author
 
-MIT License — free to use, modify, and distribute.
+**Mohammed Abdullah Suhaib** · [GitHub](https://github.com/suhaib1202)
 
 ---
-
 <div align="center">
