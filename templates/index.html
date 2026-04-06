@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CrowdPulse — Live Engagement</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <div class="header">
+    <h1>🎯 CrowdPulse</h1>
+    <p>Real-Time Audience Engagement Detector</p>
+  </div>
+
+  <div class="main">
+
+    <!-- LEFT: Live webcam feed -->
+    <div class="camera-panel">
+      <img src="/video_feed" id="feed">
+      <div class="alert" id="alert-box">⚠️ Audience attention dropping — consider pausing!</div>
+    </div>
+
+    <!-- RIGHT: Stats + Chart -->
+    <div class="stats-panel">
+
+      <div class="score-box">
+        <div class="score-label">Live Engagement Score</div>
+        <div class="score-number" id="score-num">--%</div>
+        <div class="sub-stats">
+          <span id="face-count">Faces: 0</span>
+          <span id="engaged-count">Engaged: 0</span>
+        </div>
+      </div>
+
+      <div class="chart-box">
+        <canvas id="engagementChart"></canvas>
+      </div>
+
+      <div class="legend">
+        <span class="dot green"></span> Engaged
+        <span class="dot red"></span> Zoned Out / Looking Down / Yawning
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const ctx = document.getElementById('engagementChart').getContext('2d');
+    const chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [{
+          label: 'Engagement %',
+          data: [],
+          borderColor: '#00e676',
+          backgroundColor: 'rgba(0,230,118,0.1)',
+          borderWidth: 2,
+          pointRadius: 0,
+          tension: 0.4,
+          fill: true
+        }]
+      },
+      options: {
+        animation: false,
+        scales: {
+          y: {
+            min: 0, max: 100,
+            ticks: { color: '#ccc', callback: v => v + '%' },
+            grid: { color: '#333' }
+          },
+          x: {
+            ticks: { color: '#ccc', maxTicksLimit: 8 },
+            grid: { color: '#333' }
+          }
+        },
+        plugins: {
+          legend: { labels: { color: '#eee' } }
+        }
+      }
+    });
+
+    async function refresh() {
+      try {
+        const res = await fetch('/stats');
+        const data = await res.json();
+
+        document.getElementById('score-num').textContent = data.score + '%';
+        document.getElementById('face-count').textContent = 'Faces: ' + data.total;
+        document.getElementById('engaged-count').textContent = 'Engaged: ' + data.engaged;
+
+        // Colour score
+        const scoreEl = document.getElementById('score-num');
+        if (data.score >= 70) scoreEl.style.color = '#00e676';
+        else if (data.score >= 40) scoreEl.style.color = '#ffca28';
+        else scoreEl.style.color = '#ef5350';
+
+        // Alert
+        const alertBox = document.getElementById('alert-box');
+        alertBox.style.display = data.score < 40 && data.total > 0 ? 'block' : 'none';
+
+        // Update chart
+        chart.data.labels = data.history.map(h => h.time);
+        chart.data.datasets[0].data = data.history.map(h => h.score);
+        chart.update();
+
+      } catch(e) {}
+    }
+
+    setInterval(refresh, 1000);
+    refresh();
+  </script>
+
+</body>
+</html>
